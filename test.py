@@ -21,10 +21,13 @@ def main():
         size = 5*5
     elif s == "m":
         size = 6*6
-    else: s = 7*7
+    else: 
+        size = 7*7
 
     squares["noMines"] = list(range(size))
 
     m=int(input("How many mines would you like?: "))
     rng(size,m)
+    print(squares)
 
+main()
