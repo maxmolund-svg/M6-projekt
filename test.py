@@ -6,12 +6,13 @@ import random
 squares={"mines":[],"noMines":[]}
 
 
-def rng(size, mines):
-
-    for i in range (mines):
-        mine = randint(0, size-1)
+def rng(mines):
+    
+    squares["mines"] = random.sample(squares["noMines"], mines)
+    for mine in squares["mines"]:
         squares["noMines"].remove(mine)
-        squares["mines"].append(mine)
+
+
 
 
 def main():
@@ -26,5 +27,5 @@ def main():
     squares["noMines"] = list(range(size))
 
     m=int(input("How many mines would you like?: "))
-    rng(size,m)
+    rng(m)
 
