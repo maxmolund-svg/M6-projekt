@@ -8,10 +8,10 @@ squares={"mines":[],"noMines":[]}
 
 def rng(size, mines):
 
-    
-    for i in range (1, mines-1):
-        mine = randint(0, size)
-        
+    for i in range (mines-1):
+        mine = randint(0, size-1)
+        squares["noMines"].remove(mine)
+        squares["mines"].append(mine)
 
 
 def main():
@@ -19,9 +19,9 @@ def main():
 
     if s == "s":
         size = 5*5
-    elif size == "m":
+    elif s == "m":
         size = 6*6
-    else: size == 7*7
+    else: s == 7*7
 
     squares["noMines"] = list(range(size))
 
