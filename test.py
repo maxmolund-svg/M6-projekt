@@ -1,6 +1,11 @@
 #minesweeper M6
+import random
 
 squares={"mines":[],"noMines":[]}
 
-def rng():
+def rng(size,mines):
     print("Hello world")
+
+def main():
+    s=input("What size map would you like to play?: ")
+    m=input("How many mines would you like?: ")
