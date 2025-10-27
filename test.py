@@ -88,6 +88,40 @@ def printBoardState(size):
                 print("#",end="")
             
 
+def game(size):    
+    width=math.isqrt(size)
+    revealed = set()
+    while True:
+        print("\nCurrent board:")
+        for i in range(size):
+            if i % width == 0:
+                print()
+            if i in revealed:
+                    num = [sq[4] for sq in squares["noMines"] if sq[0] == i][0]
+                    print(num, end="")
+            else:
+                print("X", end="")
+        print("\n")
+        x = int(input("Enter X coordinate: "))
+        y = int(input("Enter Y coordinate: "))
+        target = None
+        for sq in squares["noMines"] + squares["mines"]:
+            if sq[1] == (x, y):
+                target = sq
+                break
+        if target is None:
+            print("Invalid coordinates!")
+            continue
+        if target in squares["mines"]:
+            print("You hit a mine!")
+            print("Game Over!")
+            break
+        else:
+            revealed.add(target[0])
+        if len(revealed) == len(squares["noMines"]):
+            print("You win!")
+            print("Game Over!")
+            break
 
 def main():
     s=input("What size map would you like to play?(s,m or l): ")
@@ -121,5 +155,6 @@ def main():
     
     printNoFog(size)
     printBoardState(size)
+    game(size)
 
 main()
