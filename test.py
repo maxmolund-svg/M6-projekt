@@ -13,7 +13,7 @@ def rng(mines):
     for mine in squares["mines"]:
         squares["noMines"].remove(mine)
 
-def findAdjacent(): #not properly tested
+def findAdjacent():
     for i in range(len(squares["noMines"])):
         x1=squares["noMines"][i][1][0]
         y1=squares["noMines"][i][1][1]
@@ -42,20 +42,52 @@ def findAdjacent(): #not properly tested
         squares["noMines"][i].append(adjacent)
 
 
-def testPrint(size):
+def printNoFog(size):
+    print('\n',end="")
     width=math.isqrt(size)
     for x in range(size):
         if x!=0 and (x%width)==0:
-            #print("ny rad")
+            #new row
             print('\n',end="") 
         for n in range(len(squares["mines"])):
             if x==squares["mines"][n][0]:
-                #print("mina")
+                #mine
                 print("m",end="")
         for n in range(len(squares["noMines"])):
             if x==squares["noMines"][n][0]:
-                #print("ej mina")
+                #number of adjacent mines
                 print(f"{squares['noMines'][n][4]}",end="")
+
+def printBoardState(size):
+    print('\n')
+    print('\n',end="")
+    width=math.isqrt(size)
+    for x in range(size):
+        if x!=0 and (x%width)==0:
+            #new row
+            print('\n',end="") 
+        for n in range(len(squares["mines"])):
+            if x==squares["mines"][n][0] and squares["mines"][n][2]==True:
+                #mine
+                print("m",end="")
+            elif x==squares["mines"][n][0] and squares["mines"][n][3]==True:
+                #flag
+                print("+",end="")
+            elif x==squares["mines"][n][0] and squares["mines"][n][2]==False:
+                #hidden square
+                print("#",end="")
+        for n in range(len(squares["noMines"])):
+            if x==squares["noMines"][n][0] and squares["noMines"][n][2]==True:
+                #number of adjacent mines
+                print(f"{squares['noMines'][n][4]}",end="")
+            elif x==squares["noMines"][n][0] and squares["noMines"][n][3]==True:
+                #flag
+                print("+",end="")
+            elif x==squares["noMines"][n][0] and squares["noMines"][n][2]==False:
+                #hidden square
+                print("#",end="")
+            
+
 
 def main():
     s=input("What size map would you like to play?(s,m or l): ")
@@ -78,7 +110,8 @@ def main():
             y=math.floor(n/width)
 
         squares["noMines"].append([n,(x,y),False,False])
-        #print((x,y))
+        #första bool (index 2) är om grävd; andra (index 3) är mo flaggad
+        # #print((x,y))
 
     m=int(input("How many mines would you like?: "))
 
@@ -86,7 +119,7 @@ def main():
     
     findAdjacent()
     
-    testPrint(size)
-    #print(squares)
+    printNoFog(size)
+    printBoardState(size)
 
 main()
