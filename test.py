@@ -102,8 +102,12 @@ def game(size):
             else:
                 print("X", end="")
         print("\n")
-        x = int(input("Enter X coordinate: "))
-        y = int(input("Enter Y coordinate: "))
+        while True:
+            try:
+                x = int(input("Enter X coordinate: "))
+                y = int(input("Enter Y coordinate: "))
+                break
+            except ValueError: print("Please choose valid coordinates!")
         target = None
         for sq in squares["noMines"] + squares["mines"]:
             if sq[1] == (x, y):
