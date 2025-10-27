@@ -13,7 +13,7 @@ def rng(mines):
     for mine in squares["mines"]:
         squares["noMines"].remove(mine)
 
-def findAdjacent():
+def findAdjacent(): #not properly tested
     for i in range(len(squares["noMines"])):
         x1=squares["noMines"][i][1][0]
         y1=squares["noMines"][i][1][1]
@@ -42,15 +42,20 @@ def findAdjacent():
         squares["noMines"][i].append(adjacent)
 
 
-def testPrint(size): #trasig
+def testPrint(size):
+    width=math.isqrt(size)
     for x in range(size):
-        width=math.isqrt(size)
-        if x!=0 and math.floor(x/width)>math.floor((x-1)/width):
+        if x!=0 and (x%width)==0:
+            #print("ny rad")
             print('\n',end="") 
-        elif x==squares["mines"][x][0]:
-            print("m",end="")
-        elif x==squares["noMines"][x][0]:
-            print(f"{squares['noMines'][x][4]}",end="")
+        for n in range(len(squares["mines"])):
+            if x==squares["mines"][n][0]:
+                #print("mina")
+                print("m",end="")
+        for n in range(len(squares["noMines"])):
+            if x==squares["noMines"][n][0]:
+                #print("ej mina")
+                print(f"{squares['noMines'][n][4]}",end="")
 
 def main():
     s=input("What size map would you like to play?(s,m or l): ")
