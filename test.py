@@ -135,7 +135,7 @@ def printBoardState(size):
                 print("#",end="")
 
 revealed = set()
-
+flagged=set()
 def game(size):    
     width=math.isqrt(size)
     
@@ -147,6 +147,8 @@ def game(size):
             if i in revealed:
                     num = [sq[4] for sq in squares["noMines"] if sq[0] == i][0]
                     print(num, end="")
+            elif i in flagged:
+                print("+",end="")
             else:
                 print("X", end="")
         print("\n")
@@ -164,25 +166,55 @@ def game(size):
         if target is None:
             print("Invalid coordinates!")
             continue
-        if target in squares["mines"]:
-            print("You hit a mine!")
-            print("Game Over!")
-            print("This was your board:")
-            printNoFog(size)
-            break
-        else:
-            revealed.add(target[0])
+        
+        
+
+        t = input("Do you want to dig (d) or flag (f)?: ")
+        if t=="f":
+            for n in range(len(squares["mines"])):
+                if target==squares["mines"][n]:
+                    if squares["mines"][n][3]==True:
+                        squares["mines"][n][3]=False
+                        flagged.remove(target[0])
+                        break
+                    elif squares["mines"][n][3]==False:
+                        squares["mines"][n][3]=True
+                        flagged.add(target[0])
+                        break
             for n in range(len(squares["noMines"])):
-                if squares["noMines"][n]==target:
-                    squares["noMines"][n][2]=True
-                    print(squares["noMines"][n])
-            clearAdjacent(target[1])
-        if len(revealed) == len(squares["noMines"]):
-            print("You win!")
-            print("Game Over!")
-            print("This was your board:")
-            printNoFog(size)
-            break
+                if target==squares["noMines"][n]:
+                    if target==squares["noMines"][n]:
+                        if squares["noMines"][n][3]==True:
+                            squares["noMines"][n][3]=False
+                            flagged.remove(target[0])
+                            break
+                        elif squares["noMines"][n][3]==False:
+                            squares["noMines"][n][3]=True
+                            flagged.add(target[0])
+                            break     
+        elif t=="d":
+            if target in squares["mines"]:
+                print("You hit a mine!")
+                print("Game Over!")
+                print("This was your board:")
+                printNoFog(size)
+                break
+            else:
+                revealed.add(target[0])
+                for n in range(len(squares["noMines"])):
+                    if squares["noMines"][n]==target:
+                        squares["noMines"][n][2]=True
+                    if target[4]==0:
+                        clearAdjacent(target[1])
+            if len(revealed) == len(squares["noMines"]):
+                print("You win!")
+                print("Game Over!")
+                print("This was your board:")
+                printNoFog(size)
+                break
+        else:
+            print("invalid action")
+            continue    
 
 def main():
     s=input("What size map would you like to play?(s,m or l): ")
@@ -214,8 +246,8 @@ def main():
     
     findAdjacent()
     
-    printNoFog(size)
-    printBoardState(size)
+    #printNoFog(size)
+    #printBoardState(size)
     game(size)
 
 main()
