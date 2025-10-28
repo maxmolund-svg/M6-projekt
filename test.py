@@ -42,6 +42,53 @@ def findAdjacent():
         squares["noMines"][i].append(adjacent)
 
 
+def clearAdjacent(cord):
+    x1=cord[0]
+    y1=cord[1]
+    for i in range(len(squares["noMines"])):
+        x2=squares["noMines"][i][1][0]
+        y2=squares["noMines"][i][1][1]
+        if x2==(x1-1) and y2==(y1-1) and squares["noMines"][i][2]==False:
+            squares["noMines"][i][2]=True
+            revealed.add(squares["noMines"][i][0])
+            if squares["noMines"][i][4]==0:
+                clearAdjacent(squares["noMines"][i][1])
+        elif x2==(x1-1) and y2==(y1) and squares["noMines"][i][2]==False:
+            squares["noMines"][i][2]=True
+            revealed.add(squares["noMines"][i][0])
+            if squares["noMines"][i][4]==0:
+                clearAdjacent(squares["noMines"][i][1])
+        elif x2==(x1-1) and y2==(y1+1) and squares["noMines"][i][2]==False:
+            squares["noMines"][i][2]=True
+            revealed.add(squares["noMines"][i][0])
+            if squares["noMines"][i][4]==0:
+                clearAdjacent(squares["noMines"][i][1])
+        elif x2==(x1) and y2==(y1-1) and squares["noMines"][i][2]==False:
+            squares["noMines"][i][2]=True
+            revealed.add(squares["noMines"][i][0])
+            if squares["noMines"][i][4]==0:
+                clearAdjacent(squares["noMines"][i][1])
+        elif x2==(x1) and y2==(y1+1) and squares["noMines"][i][2]==False:
+            squares["noMines"][i][2]=True
+            revealed.add(squares["noMines"][i][0])
+            if squares["noMines"][i][4]==0:
+                clearAdjacent(squares["noMines"][i][1])
+        elif x2==(x1+1) and y2==(y1-1) and squares["noMines"][i][2]==False:
+            squares["noMines"][i][2]=True
+            revealed.add(squares["noMines"][i][0])
+            if squares["noMines"][i][4]==0:
+                clearAdjacent(squares["noMines"][i][1])
+        elif x2==(x1+1) and y2==(y1) and squares["noMines"][i][2]==False:
+            squares["noMines"][i][2]=True
+            revealed.add(squares["noMines"][i][0])
+            if squares["noMines"][i][4]==0:
+                clearAdjacent(squares["noMines"][i][1])
+        elif x2==(x1+1) and y2==(y1+1) and squares["noMines"][i][2]==False:
+            squares["noMines"][i][2]=True
+            revealed.add(squares["noMines"][i][0])
+            if squares["noMines"][i][4]==0:
+                clearAdjacent(squares["noMines"][i][1])
+
 def printNoFog(size):
     print('\n',end="")
     width=math.isqrt(size)
@@ -86,11 +133,12 @@ def printBoardState(size):
             elif x==squares["noMines"][n][0] and squares["noMines"][n][2]==False:
                 #hidden square
                 print("#",end="")
-            
+
+revealed = set()
 
 def game(size):    
     width=math.isqrt(size)
-    revealed = set()
+    
     while True:
         print("\nCurrent board:")
         for i in range(size):
@@ -119,12 +167,21 @@ def game(size):
         if target in squares["mines"]:
             print("You hit a mine!")
             print("Game Over!")
+            print("This was your board:")
+            printNoFog(size)
             break
         else:
             revealed.add(target[0])
+            for n in range(len(squares["noMines"])):
+                if squares["noMines"][n]==target:
+                    squares["noMines"][n][2]=True
+                    print(squares["noMines"][n])
+            clearAdjacent(target[1])
         if len(revealed) == len(squares["noMines"]):
             print("You win!")
             print("Game Over!")
+            print("This was your board:")
+            printNoFog(size)
             break
 
 def main():
