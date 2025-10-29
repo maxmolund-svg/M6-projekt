@@ -107,7 +107,36 @@ def printNoFog(size):
 
 revealed = set()
 flagged=set()
-def game(size):    
+
+def game():
+
+    s=input("What size map would you like to play?(s,m or l): ")
+
+    if s == "s":
+        size = 5*5
+    elif s == "m":
+        size = 9*9
+    else: 
+        size = 16*16
+
+    for n in range(size):
+        width=math.isqrt(size)
+        
+        x=n%width
+        
+        if n==0:
+            y=0 #solves divide by 0 error
+        else:
+            y=math.floor(n/width)
+
+        squares["noMines"].append([n,(x,y),False,False])
+        #första bool (index 2) är om grävd; andra (index 3) är om flaggad
+        # #print((x,y))
+
+    m=int(input("How many mines would you like?: "))
+    rng(m)
+    findAdjacent()
+        
     width=math.isqrt(size)
     
     while True:
@@ -190,38 +219,5 @@ def game(size):
             print("invalid action")
             continue
 
-def main():
-    s=input("What size map would you like to play?(s,m or l): ")
 
-    if s == "s":
-        size = 5*5
-    elif s == "m":
-        size = 9*9
-    else: 
-        size = 16*16
-
-    for n in range(size):
-        width=math.isqrt(size)
-        
-        x=n%width
-        
-        if n==0:
-            y=0 #solves divide by 0 error
-        else:
-            y=math.floor(n/width)
-
-        squares["noMines"].append([n,(x,y),False,False])
-        #första bool (index 2) är om grävd; andra (index 3) är mo flaggad
-        # #print((x,y))
-
-    m=int(input("How many mines would you like?: "))
-
-    rng(m)
-    
-    findAdjacent()
-    
-    #printNoFog(size)
-    #printBoardState(size)
-    game(size)
-
-main()
+game()
