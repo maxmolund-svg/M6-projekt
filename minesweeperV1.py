@@ -1,11 +1,13 @@
-from random import randint
+# -------------------------------------------------------------------------------------------------
+# Minesweeper
+# Terminal (i.e. python shell) text based game.
+# Created for module 6 of the course "Introduktion till informationsteknik" at Uppsala University
+# By Max Molund and Ture Nilsson
+#--------------------------------------------------------------------------------------------------
 import random
 import math
-#minesweeper M6
-
 
 squares={"mines":[],"noMines":[]}
-
 
 def rng(mines):
     
@@ -29,8 +31,6 @@ def findAdjacent():
                 adjacent+=1   
             elif x2==(x1) and y2==(y1-1):
                 adjacent+=1
-            #elif x2==(x1) and y2==(y1): samma kan ej vara närliggande
-            #    adjacent+=1
             elif x2==(x1) and y2==(y1+1):
                 adjacent+=1
             elif x2==(x1+1) and y2==(y1-1):
@@ -40,7 +40,6 @@ def findAdjacent():
             elif x2==(x1+1) and y2==(y1+1):
                 adjacent+=1
         squares["noMines"][i].append(adjacent)
-
 
 def clearAdjacent(cord):
     x1=cord[0]
@@ -182,7 +181,6 @@ def game(size):
                         clearAdjacent(target[1])
             if len(revealed) == len(squares["noMines"]):
                 print("You win!")
-                #print("Game Over!")
                 print("This was your board:")
                 printNoFog(size)
                 break
@@ -211,17 +209,15 @@ def main():
             y=math.floor(n/width)
 
         squares["noMines"].append([n,(x,y),False,False])
-        #första bool (index 2) är om grävd; andra (index 3) är mo flaggad
-        # #print((x,y))
+       #first bool (index 2) is if dug; second (index 3) is if flagged
+       
 
     m=int(input("How many mines would you like?: "))
 
     rng(m)
     
     findAdjacent()
-    
-    #printNoFog(size)
-    #printBoardState(size)
+
     game(size)
 
 main()
