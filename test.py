@@ -105,35 +105,6 @@ def printNoFog(size):
                 #number of adjacent mines
                 print(f"{squares['noMines'][n][4]}",end="")
 
-def printBoardState(size):
-    print('\n')
-    print('\n',end="")
-    width=math.isqrt(size)
-    for x in range(size):
-        if x!=0 and (x%width)==0:
-            #new row
-            print('\n',end="") 
-        for n in range(len(squares["mines"])):
-            if x==squares["mines"][n][0] and squares["mines"][n][2]==True:
-                #mine
-                print("m",end="")
-            elif x==squares["mines"][n][0] and squares["mines"][n][3]==True:
-                #flag
-                print("+",end="")
-            elif x==squares["mines"][n][0] and squares["mines"][n][2]==False:
-                #hidden square
-                print("#",end="")
-        for n in range(len(squares["noMines"])):
-            if x==squares["noMines"][n][0] and squares["noMines"][n][2]==True:
-                #number of adjacent mines
-                print(f"{squares['noMines'][n][4]}",end="")
-            elif x==squares["noMines"][n][0] and squares["noMines"][n][3]==True:
-                #flag
-                print("+",end="")
-            elif x==squares["noMines"][n][0] and squares["noMines"][n][2]==False:
-                #hidden square
-                print("#",end="")
-
 revealed = set()
 flagged=set()
 def game(size):    
