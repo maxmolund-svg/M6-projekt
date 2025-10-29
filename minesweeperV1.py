@@ -1,11 +1,13 @@
-from random import randint
+# -------------------------------------------------------------------------------------------------
+# Minesweeper
+# Terminal (i.e. python shell) text based game.
+# Created for module 6 of the course "Introduktion till informationsteknik" at Uppsala University
+# By Max Molund and Ture Nilsson
+#--------------------------------------------------------------------------------------------------
 import random
 import math
-#minesweeper M6
-
 
 squares={"mines":[],"noMines":[]}
-
 
 def rng(mines):
     
@@ -29,8 +31,6 @@ def findAdjacent():
                 adjacent+=1   
             elif x2==(x1) and y2==(y1-1):
                 adjacent+=1
-            #elif x2==(x1) and y2==(y1): samma kan ej vara närliggande
-            #    adjacent+=1
             elif x2==(x1) and y2==(y1+1):
                 adjacent+=1
             elif x2==(x1+1) and y2==(y1-1):
@@ -40,7 +40,6 @@ def findAdjacent():
             elif x2==(x1+1) and y2==(y1+1):
                 adjacent+=1
         squares["noMines"][i].append(adjacent)
-
 
 def clearAdjacent(cord):
     x1=cord[0]
@@ -211,7 +210,6 @@ def game():
                         clearAdjacent(target[1])
             if len(revealed) == len(squares["noMines"]):
                 print("You win!")
-                #print("Game Over!")
                 print("This was your board:")
                 printNoFog(size)
                 break
@@ -219,5 +217,36 @@ def game():
             print("invalid action")
             continue
 
+def main():
+    s=input("What size map would you like to play?(s,m or l): ")
 
-game()
+    if s == "s":
+        size = 5*5
+    elif s == "m":
+        size = 9*9
+    else: 
+        size = 16*16
+
+    for n in range(size):
+        width=math.isqrt(size)
+        
+        x=n%width
+        
+        if n==0:
+            y=0 #solves divide by 0 error
+        else:
+            y=math.floor(n/width)
+
+        squares["noMines"].append([n,(x,y),False,False])
+       #first bool (index 2) is if dug; second (index 3) is if flagged
+       
+
+    m=int(input("How many mines would you like?: "))
+
+    rng(m)
+    
+    findAdjacent()
+
+    game(size)
+
+main()
