@@ -191,8 +191,11 @@ def game(size):
                         elif squares["noMines"][n][3]==False:
                             squares["noMines"][n][3]=True
                             flagged.add(target[0])
-                            break     
+                            break
         elif t=="d":
+            if target[3]==True:
+                print("You can't dig a flag. To remove it, use the flag action on this square again")
+                continue
             if target in squares["mines"]:
                 print("You hit a mine!")
                 print("Game Over!")
@@ -208,13 +211,13 @@ def game(size):
                         clearAdjacent(target[1])
             if len(revealed) == len(squares["noMines"]):
                 print("You win!")
-                print("Game Over!")
+                #print("Game Over!")
                 print("This was your board:")
                 printNoFog(size)
                 break
         else:
             print("invalid action")
-            continue    
+            continue
 
 def main():
     s=input("What size map would you like to play?(s,m or l): ")
@@ -222,9 +225,9 @@ def main():
     if s == "s":
         size = 5*5
     elif s == "m":
-        size = 6*6
+        size = 9*9
     else: 
-        size = 7*7
+        size = 16*16
 
     for n in range(size):
         width=math.isqrt(size)
