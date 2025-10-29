@@ -129,8 +129,8 @@ def game():
             y=math.floor(n/width)
 
         squares["noMines"].append([n,(x,y),False,False])
-        #första bool (index 2) är om grävd; andra (index 3) är om flaggad
-        # #print((x,y))
+        #first bool (index 2) is if dug; second (index 3) is if flagged
+        
 
     m=int(input("How many mines would you like?: "))
     rng(m)
