@@ -182,15 +182,14 @@ def game():
                         break
             for n in range(len(squares["noMines"])):
                 if target==squares["noMines"][n]:
-                    if target==squares["noMines"][n]:
-                        if squares["noMines"][n][3]==True:
-                            squares["noMines"][n][3]=False
-                            flagged.remove(target[0])
-                            break
-                        elif squares["noMines"][n][3]==False:
-                            squares["noMines"][n][3]=True
-                            flagged.add(target[0])
-                            break
+                    if squares["noMines"][n][3]==True:
+                        squares["noMines"][n][3]=False
+                        flagged.remove(target[0])
+                        break
+                    elif squares["noMines"][n][3]==False:
+                        squares["noMines"][n][3]=True
+                        flagged.add(target[0])
+                        break
         elif t=="d":
             if target[3]==True:
                 print("You can't dig a flag. To remove it, use the flag action on this square again")
